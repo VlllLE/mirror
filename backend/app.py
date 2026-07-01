@@ -145,6 +145,18 @@ def reflect():
 
         chat_history.append({"role": "mirror", "content": response})
 
+
+    #gen response
+    try:
+        output = model(full_prompt)
+        response = str(output).strip()
+    except Exception as e:
+        print("Error during generation:", e)
+        response = "mirror is offline right now but still listening."
+
+    #add mirror reply
+    chat_history.append({"role": "mirror", "content": response})
+
     # Persist updated chat history (Supabase preferred, file fallback)
     persist_chat_history(user_id, chat_history)
 

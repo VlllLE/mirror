@@ -45,17 +45,6 @@ FLAG_CATEGORIES = {
 
 FLAG_LOG_PATH = os.path.join(os.path.dirname(__file__), "flag_log.json")
 
-# Maps tag_engine tags (e.g. "radical:violence") to moderation categories
-TAG_TO_FLAG_CATEGORY = {
-    "radical:violence": "hate_speech",
-    "radical:racial": "racism",
-    "radical:religious": "hate_speech",
-    "radical:zionism": "hate_speech",
-    "radical:islamist": "hate_speech",
-    "radical:memetic": "radicalization",
-    "meme:hornycore": "nsfw",
-}
-
 
 def normalize_text(text):
     return re.sub(r'[^\w\s]', '', text.lower())
@@ -71,9 +60,8 @@ def flag_input(user_input: str, detected_tags: list) -> dict:
                 break  #one hit per category
 
     for tag in detected_tags:
-        category = TAG_TO_FLAG_CATEGORY.get(tag)
-        if category and category not in flags_triggered:
-            flags_triggered.append(category)
+        if tag in FLAG_CATEGORIES and tag not in flags_triggered:
+            flags_triggered.append(tag)
 
     flagged = len(flags_triggered) > 0
 

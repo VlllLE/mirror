@@ -1,6 +1,8 @@
 # flag_cli.py
 from flag_engine import flag_input
 
+print(flag_input("gas all jews",[]))
+
 print("🧪 Mirror Flag Tester (CLI mode)\nType a message to test moderation. Type 'exit' to quit.\n")
 
 while True:
