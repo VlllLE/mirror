@@ -1,0 +1,93 @@
+/* themes/dark.css */
+
+body {
+  background: linear-gradient(to bottom, #1a1a1a, #121212);
+  margin: 0;
+  padding: 0;
+  color: #f0f0f0;
+}
+
+.mirror-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #1f1f1f;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.856);
+  font-family: 'Verdana', sans-serif;
+  color: #f0f0f0;
+  z-index: 1;
+  position: relative;
+}
+
+.mirror-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #f0f0f0;
+  margin-bottom: 1.5rem;
+}
+
+.mirror-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #444;
+  border-radius: 10px;
+  background-color: #242424;
+  color: #ffffff;
+}
+
+
+.mirror-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mirror-button:hover {
+  background-color: #000;
+}
+
+.mirror-loading,
+.mirror-response {
+  margin-top: 1.5rem;
+  background-color: #2a2a2a;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #888;
+  color: #ddd;
+}
+
+/* Sidebar / navbar for dark theme */
+.sidebar {
+  width: 250px;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at top left, #525252, #161616); /* change as needed */
+  color: #ffffff;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2,
+.sidebar a,
+.sidebar button {
+  color: #ffffff; 
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar button:hover,
+.sidebar a:hover {
+  color: #dec9ff; 
+}

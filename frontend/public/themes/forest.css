@@ -1,0 +1,86 @@
+/* themes/forest.css */
+
+body {
+  background: linear-gradient(to bottom, #e8f0e8, #d6e5d6);
+  margin: 0;
+  padding: 0;
+}
+
+.mirror-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #f5fff5;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(100, 130, 100, 0.2);
+  font-family: 'Verdana', sans-serif;
+  color: #2c402c;
+}
+
+.mirror-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #4b704b;
+  margin-bottom: 1.5rem;
+}
+
+.mirror-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #a8c5a8;
+  border-radius: 10px;
+  background-color: #eef8ee;
+  color: #334533;
+}
+
+.mirror-button {
+  margin-top: 1rem;
+  padding: 0.7rem 1.4rem;
+  background-color: #6f9e6f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mirror-button:hover {
+  background-color: #5a885a;
+}
+
+.mirror-loading,
+.mirror-response {
+  margin-top: 1.5rem;
+  background-color: #e6f2e6;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #6f9e6f;
+  color: #2c402c; /* 🩵 FIX: readable text on light background <~ ngl shoutout GPT4 ^~^ */
+}
+
+/* Sidebar / navbar for forest theme */
+.sidebar {
+  background: linear-gradient(to bottom, #2c402c, #1a311a);
+  color: #ffffff;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  padding: 1rem;
+}
+
+.sidebar h2,
+.sidebar a,
+.sidebar button {
+  color: #f0fff0; /* soft white-green */
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar button:hover,
+.sidebar a:hover {
+  color: #b7e6b7; /* brighter on hover */
+}

@@ -1,0 +1,9 @@
+venv/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+
+# Runtime data — user chats and moderation logs
+backend/data/
+backend/flag_log.json

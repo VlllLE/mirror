@@ -1,0 +1,90 @@
+/* themes/moonlight.css */
+
+body {
+  background: radial-gradient(circle at center, #d5d2df, #6641d4);
+  margin: 0;
+  padding: 0;
+}
+
+.mirror-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #f9f7fc;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(123, 104, 201, 0.2);
+  font-family: 'Verdana', sans-serif;
+  color: #483f5f;
+  z-index: 1;
+  position: relative;
+}
+
+.mirror-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #6d5a91;
+  margin-bottom: 1.5rem;
+}
+
+.mirror-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #cbbbe6;
+  border-radius: 10px;
+  background-color: #f1eef9;
+  color: #45375e;
+}
+
+.mirror-button {
+  margin-top: 1rem;
+  padding: 0.7rem 1.4rem;
+  background-color: #8c75c3;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mirror-button:hover {
+  background-color: #745f9e;
+}
+
+.mirror-loading,
+.mirror-response {
+  margin-top: 1.5rem;
+  background-color: #ece6f7;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #8c75c3;
+}
+
+/* Sidebar / navbar for moonlight theme */
+.sidebar {
+  width: 250px;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: radial-gradient(circle at top left, #7a64b8, #5e4c91); /* change as needed */
+  color: #333;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2,
+.sidebar a,
+.sidebar button {
+  color: #f3eaff; /* soft lavender white */
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar button:hover,
+.sidebar a:hover {
+  color: #dec9ff; /* soft violet pop */
+}

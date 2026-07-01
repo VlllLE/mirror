@@ -1,0 +1,85 @@
+/* themes/sunset.css */
+
+body {
+  background: linear-gradient(to bottom, #fff0e6, #ffe0cc);
+  margin: 0;
+  padding: 0;
+}
+
+.mirror-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #f5fff5;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(255, 150, 100, 0.2);
+  font-family: 'Verdana', sans-serif;
+  color: #4a2d27;
+}
+
+.mirror-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #d97742;
+  margin-bottom: 1.5rem;
+}
+
+.mirror-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid #a8c5a8;
+  border-radius: 10px;
+  background-color: #eef8ee;
+  color: #d97742;
+}
+
+.mirror-button {
+  margin-top: 1rem;
+  padding: 0.7rem 1.4rem;
+  background-color: #e38c68;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mirror-button:hover {
+  background-color: #ce7555;
+}
+
+.mirror-loading,
+.mirror-response {
+  margin-top: 1.5rem;
+  background-color: #fff0e6;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #d97742;
+}
+
+/* Sidebar / navbar for sunset theme */
+.sidebar {
+  background: linear-gradient(to bottom, #d97742, #a94f2c); /* darker warm orange gradient */
+  color: #fff7f2;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  padding: 1rem;
+}
+
+.sidebar h2,
+.sidebar a,
+.sidebar button {
+  color: #fff7f2;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar button:hover,
+.sidebar a:hover {
+  color: #ffdbc5; /* lighter peach on hover */
+}
