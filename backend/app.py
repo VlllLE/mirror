@@ -14,10 +14,11 @@ from flag_engine import flag_input
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-CORS(app)
 
-# Load environment variables
 load_dotenv()
+
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+CORS(app, origins=[origin.strip() for origin in allowed_origins if origin.strip()])
 
 #load model
 model_path = "TheBloke/Mistral-7B-Instruct-v0.1-GGUF"
@@ -63,7 +64,6 @@ def _get_memory_file(user_id: str) -> str:
     return os.path.join(memory_dir, f"{user_id}_memory.json")
 
 def fetch_chat_history(user_id: str):
-    # Use file-based storage
     memory_file = _get_memory_file(user_id)
     if os.path.exists(memory_file):
         try:
@@ -74,7 +74,6 @@ def fetch_chat_history(user_id: str):
     return default_examples.copy()
 
 def persist_chat_history(user_id: str, chat_history: list):
-    # Use file-based storage
     memory_file = _get_memory_file(user_id)
     try:
         with open(memory_file, "w") as f:
@@ -83,6 +82,10 @@ def persist_chat_history(user_id: str, chat_history: list):
     except Exception as e:
         print(f"[ChatStore] Failed writing file memory: {e}")
         return False
+
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
 
 @app.route("/reflect", methods=["POST"])
 def reflect():
@@ -95,32 +98,24 @@ def reflect():
     if not user_input:
         return jsonify({"error": "Message is required."}), 400
 
-    # Load chat history (Supabase if configured, otherwise file-based)
     chat_history = fetch_chat_history(user_id)
-
-    #add new user message
     chat_history.append({"role": "user", "content": user_input})
 
-    #build prompt
     full_prompt = system_prompt
-    for turn in chat_history[-5:]:  # Use last 5 turns only
+    for turn in chat_history[-5:]:
         role = "Human" if turn["role"] == "user" else "Mirror"
         full_prompt += f"\n{role}: {turn['content']}"
 
-    #run tag engine
     tags = tag_input(chat_history)
     flag_result = flag_input(user_input, tags)
 
     if flag_result["flagged"]:
         response = flag_result["safe_message"]
-        chat_history.append({"role": "mirror", "content": response})
     else:
-        #add introspection hints
         full_prompt += "\n" + interpret_tags(tags)
 
-        #recursive feedback loop: self-check mirror's last reply <- this is kinda insane
         previous_reply = ""
-        for turn in reversed(chat_history[:-1]):  #exclude the new user message just added
+        for turn in reversed(chat_history[:-1]):
             if turn["role"] == "mirror":
                 previous_reply = turn["content"]
                 break
@@ -135,7 +130,6 @@ def reflect():
         else:
             full_prompt += "\nmirror:"
 
-        #gen output
         try:
             output = model(full_prompt)
             response = str(output).strip()
@@ -143,24 +137,11 @@ def reflect():
             print("Error during generation:", e)
             response = "mirror is offline right now but still listening."
 
-        chat_history.append({"role": "mirror", "content": response})
-
-
-    #gen response
-    try:
-        output = model(full_prompt)
-        response = str(output).strip()
-    except Exception as e:
-        print("Error during generation:", e)
-        response = "mirror is offline right now but still listening."
-
-    #add mirror reply
     chat_history.append({"role": "mirror", "content": response})
-
-    # Persist updated chat history (Supabase preferred, file fallback)
     persist_chat_history(user_id, chat_history)
 
     return jsonify({"response": response})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=os.environ.get("FLASK_DEBUG") == "1")
