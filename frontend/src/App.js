@@ -174,6 +174,7 @@ function App() {
     <p style={{ marginTop: '1rem' }}>If you are in immediate danger or need urgent help, please contact a mental health professional or crisis line.</p>
     <p><strong>UK</strong>- NHS: 111, Samaritans: 116 123</p>
     <p><strong>US</strong>- Call: <strong>911</strong><em> alternatively,</em> Suicide Hotline: 988</p>
+    <p><strong>Worldwide</strong>- <a href="https://blog.opencounseling.com/suicide-hotlines/">Find a hotline</a></p>
   </Modal>
 )}
 
@@ -196,7 +197,7 @@ function App() {
       <li>Recursive feedback loop - <em>complete</em></li>
       <li>Launch-ready safety guardrails - <em>complete</em></li>
       <li>Feedback-based tuning</li>
-      <li>Themes</li>
+      <li>Themes - <em>complete</em></li>
       <li>Multiple users</li>
       <li>Settings</li>
       <li>Better models</li>

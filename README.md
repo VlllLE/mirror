@@ -1,40 +1,127 @@
-# A little bit about this
+# mirror
 
-I strongly believe that talking through your mental load will lighten it. I also strongly believe that Big AI/Venture Capitalists cannot and should not be trusted with your deepest thoughts. I shouldn't either, but I have my own issues to worry about, not yours, so it's better than the alternative. If you want to pay me to make websites for you please shout me. Thanks!
+I believe that talking through your mental load will lighten it but the thought of sitting in a therapist's office is mad cringe. I also believe that Big AI/Venture Capitalists cannot and should not be trusted with your deepest thoughts, so I built this. If you're asking why *I* should be trusted with them, that's the right question. There's not really anything I can say to reassure you other than pointing out that I am too preoccupied with my own problems to intrude on yours.
 
-## Available Scripts
+Live site: [mirrorq.ai](https://mirrorq.ai) (Currently just static react, the model is too large for any free tier hosting, looking for workarounds rn)
 
-In the project directory, you can run:
+## What this is
 
-### `npm start`
+A React frontend talks to a Flask API that runs a local Mistral 7B model (via `ctransformers`). User messages go through tagging and moderation checks before the model responds. Chat history is stored per-username in `backend/data/` (gitignored).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Prerequisites
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Python 3.10+** (3.13 works on the maintainer's machine)
+- **Node.js 18+** and npm
+- **~8 GB RAM** free — the model is downloaded on first run (~4.4 GB) and loaded into memory
+- **Git**
 
-### `npm test`
+## Local setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Clone the repo, then run the **backend** and **frontend** in two separate terminals.
 
-### `npm run build`
+### 1. Backend (Flask API — port 5000)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/VlllLE/mirror.git
+cd mirror
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+python -m venv venv
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Activate the virtual environment:
 
-### `npm run eject`
+```bash
+# Windows (Git Bash / CMD)
+venv\Scripts\activate
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# macOS / Linux
+source venv/bin/activate
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Install dependencies and start the server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+pip install -r backend/requirements.txt
+cd backend
+python app.py
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+On first start, the Mistral GGUF model is downloaded from Hugging Face. This can take a while. When ready, you should see:
+
+```
+ * Running on http://127.0.0.1:5000
+```
+
+Health check: [http://127.0.0.1:5000/health](http://127.0.0.1:5000/health) → `{"status":"ok"}`
+
+### 2. Frontend (React — port 3000)
+
+In a **second terminal**:
+
+```bash
+cd mirror/frontend
+npm install
+npm start
+```
+
+Opens [http://localhost:3000](http://localhost:3000). The app talks to the backend at `http://127.0.0.1:5000` by default — no env vars needed for local dev.
+
+### 3. Use it
+
+1. Pick a username (used to namespace chat memory)
+2. Type a message and send
+3. Watch the backend terminal for `🪞 Handling reflection for user: ...` to confirm the request landed
+
+## Project layout
+
+```
+mirror/
+├── backend/          Flask API, model, moderation/tag engines
+│   ├── app.py        Main server
+│   ├── data/         Per-user chat memory (created at runtime, not in git)
+│   └── requirements.txt
+├── frontend/         React app (Create React App)
+│   ├── src/App.js
+│   └── package.json
+└── vercel.json       Frontend deploy config (Vercel)
+```
+
+## Optional environment variables
+
+| Variable | Where | Default (local) | Purpose |
+|----------|-------|-----------------|---------|
+| `REACT_APP_API_URL` | frontend | `http://127.0.0.1:5000` | Backend URL (set in production) |
+| `ALLOWED_ORIGINS` | backend | `http://localhost:3000` | CORS origins, comma-separated |
+| `PORT` | backend | `5000` | Server port |
+| `FLASK_DEBUG` | backend | off | Set to `1` to enable Flask debug mode |
+
+## Running backend tests
+
+```bash
+cd backend
+python test_tag_engine.py
+```
+
+Flag/moderation CLI:
+
+```bash
+cd backend
+python flag_cli.py
+```
+
+## Troubleshooting
+
+**Frontend loads but messages do nothing** — backend isn't running, or not on port 5000.
+
+**Backend crashes on startup** — not enough RAM for the 7B model. Close other heavy apps or use a machine with more memory.
+
+**`npm start` fails from repo root** — `package.json` lives in `frontend/`. Run npm commands from there.
+
+**CORS errors in the browser** — if you're serving the frontend from a URL other than `localhost:3000`, set `ALLOWED_ORIGINS` on the backend to match.
+
+## Production
+
+Frontend is on Vercel ([mirrorq.ai](https://mirrorq.ai)). The backend needs a host with ~8 GB RAM (e.g. Railway) — it won't run on Vercel. Am working on getting backend live as well. You can send me money to assist with this.
+
+## Contact m@vile.cx
+
